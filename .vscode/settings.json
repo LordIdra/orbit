@@ -93,5 +93,6 @@
         "typeindex": "cpp",
         "valarray": "cpp"
     },
-    "cmake.configureOnOpen": true
+    "cmake.configureOnOpen": true,
+    "git.ignoreLimitWarning": true
 }

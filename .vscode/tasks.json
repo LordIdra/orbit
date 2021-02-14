@@ -9,14 +9,14 @@
 				"-std=c++17",
 				"-pipe",
 
-				"-IC:\\boost_1_72_0",
+				"-I${workspaceFolder}\\require\\boost_1_72_0",
 				"-I${workspaceFolder}\\src\\bodies",
 				"-I${workspaceFolder}\\src\\celestials",
 				"-I${workspaceFolder}\\src\\util\\frontend",
 				"-I${workspaceFolder}\\src\\util\\backend",
 
 				"-g",
-				"${workspaceFolder}\\src\\main.cpp",
+				"${workspaceFolder}\\main.cpp",
 
 				"${workspaceFolder}\\src\\util\\frontend\\Fonts.cpp",
 				"${workspaceFolder}\\src\\util\\frontend\\GeometryHandler.cpp",
@@ -29,7 +29,7 @@
 				"${workspaceFolder}\\src\\bodies\\Star.cpp",
 				"${workspaceFolder}\\src\\celestials\\SolarSystem.cpp",
 
-				"${workspaceFolder}\\require\\glad.c",
+				"${workspaceFolder}\\src\\require\\glad.c",
 
 				"-o",
 				"${workspaceFolder}\\build\\orbit.exe",
