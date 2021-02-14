@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}\\src\\bodies",
+				"${workspaceFolder}\\src\\celestials",
+				"${workspaceFolder}\\src\\util\\frontend",
+                "${workspaceFolder}\\src\\util\\backend",
+
+                "${workspaceFolder}/**",
+                "C:\\boost_1_72_0"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "C:/MinGW/bin/g++.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x86"
+        }
+    ],
+    "version": 4
+}
