@@ -3,7 +3,7 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}\\require\\boost_1_72_0",
+                "C:\\boost_1_72_0",
                 "${workspaceFolder}\\src\\bodies",
 				"${workspaceFolder}\\src\\celestials",
 				"${workspaceFolder}\\src\\util\\frontend",

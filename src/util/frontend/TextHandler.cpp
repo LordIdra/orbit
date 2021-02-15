@@ -2,6 +2,13 @@
 
 
 
+
+enum alignment {
+    LEFT = 0,
+    CENTRE = 1,
+    RIGHT = 2
+};
+
 GLuint TextHandler::vao = 0;
 GLuint TextHandler::vbo = 0;
 
@@ -67,7 +74,7 @@ void TextHandler::UpdateOffset(afloat x, afloat y) {
 
 
 
-void TextHandler::Render(std::string text, afloat in_x, afloat in_y, float size, float r, float g, float b)
+void TextHandler::Render(std::string text, afloat in_x, afloat in_y, int align, float size, float r, float g, float b)
 {
     // Use shader
     shader.Use();

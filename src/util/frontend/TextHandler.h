@@ -15,6 +15,9 @@ using std::vector;
 
 
 
+enum alignment;
+
+
 class TextHandler {
 
 private:
@@ -37,7 +40,7 @@ private:
 
 public:
     static void Init();
-    static void Render(std::string text, afloat x, afloat y, float size, float r, float g, float b);
+    static void Render(std::string text, afloat in_x, afloat in_y, int align, float size, float r, float g, float b);
 
     static void UpdateScreenSize(int window_x, int window_y);
     static void UpdateZoom(afloat zoom);
