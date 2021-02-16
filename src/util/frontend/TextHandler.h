@@ -15,7 +15,23 @@ using std::vector;
 
 
 
-enum alignment;
+enum alignment {
+    ALIGN_LEFT = 0,
+    ALIGN_CENTRE = 1,
+    ALIGN_RIGHT = 2
+};
+
+
+struct TextObject {
+    string text;
+    float x;
+    float y;
+    float size;
+    float r;
+    float g;
+    float b;
+    float a;
+};
 
 
 class TextHandler {
@@ -37,14 +53,16 @@ private:
     static afloat offset_x;
     static afloat offset_y;
 
+    static vector<TextObject> text_objects;
+
 
 public:
     static void Init();
-    static void Render(std::string text, afloat in_x, afloat in_y, int align, float size, float r, float g, float b);
+
+    static void DrawText(std::string text, afloat in_x, afloat in_y, int align, float size, float r, float g, float b, float a);
+    static void Render();
 
     static void UpdateScreenSize(int window_x, int window_y);
     static void UpdateZoom(afloat zoom);
     static void UpdateOffset(afloat offset_x, afloat offset_y);
-
-    static void DrawText();
 };

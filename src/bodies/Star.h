@@ -1,10 +1,7 @@
 #pragma once
 
-#include <SDL2/SDL.h>
 #include <vector>
 
-#include "TextHandler.h"
-#include "GeometryHandler.h"
 #include "Planet.h"
 
 using std::vector;
@@ -34,5 +31,5 @@ public:
         afloat starting_vel_y,
         float s_r, float s_b, float s_g, float s_a);
 
-    void Render();
+    void Render(afloat zoom);
 };

@@ -24,37 +24,51 @@ Planet::Planet(
 
 
 
-void Planet::Render()
+void Planet::Render(afloat zoom)
 {
     // Draw the planet itself
-    GeometryHandler::DrawPolygon(pos_x.convert_to<float>(), pos_y.convert_to<float>(), 30, radius.convert_to<float>() * 1000, r, g, b, a);
+    GeometryHandler::DrawPolygon(pos_x.convert_to<float>(), pos_y.convert_to<float>(), 30, radius.convert_to<float>() * 10, r, g, b, a);
   
-    /*// Planet information
+    // Planet information
+    // Calculate alpha values according to zoom level
+    // TODO tomorrow
+
+    // Screen position variables
+    afloat info_name_x = pos_x + (radius * 2) + (zoom * 90);
+    afloat info_name_y = pos_y - (zoom * 70);
+
+    afloat info_value_x = pos_x + (radius * 2) + (zoom * 230);
+    afloat info_value_y = pos_y - (zoom * 70);
+
+    // Background
+    GeometryHandler::DrawRectangle(
+        pos_x + (radius * 2) + (zoom * 80), 
+        pos_y - (zoom * 90), 
+        pos_x + (radius * 2) + (zoom * 240), 
+        pos_y + (zoom * 90), 
+        0.0f, 0.0f, 0.0f, 0.6f);
+
     // Name
-    int width = FC_GetWidth(Fonts::ScifiMediumWhite, name);
-    FC_Draw(Fonts::ScifiMediumWhite, renderer, (screen_x) + (screen_radius) + 65 - (width / 2), screen_y - 40, name);
+    TextHandler::DrawText(name, pos_x + (radius * 2) + (zoom * 160), pos_y - (zoom * 90), ALIGN_CENTRE, 0.4f, 1.0f, 1.0f, 1.0f, 1.0f);
 
     
     // Mass
     string mass_as_string = make_standard_mass(mass);
-    width = FC_GetWidth(Fonts::ScifiSmallWhite, mass_as_string);
 
-    FC_Draw(Fonts::ScifiSmallWhite, renderer, (screen_x) + (screen_radius) + 10, screen_y - 20, "MASS");
-    FC_Draw(Fonts::ScifiSmallWhite, renderer, (screen_x) + (screen_radius) + 120 - (width), screen_y - 20, mass_as_string);
+    TextHandler::DrawText("MASS", info_name_x, info_name_y, ALIGN_LEFT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
+    TextHandler::DrawText(mass_as_string, info_value_x, info_value_y, ALIGN_RIGHT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
 
 
     // Radius
     string radius_as_string = make_standard_distance(radius);
-    width = FC_GetWidth(Fonts::ScifiSmallWhite, radius_as_string);
 
-    FC_Draw(Fonts::ScifiSmallWhite, renderer, (screen_x) + (screen_radius) + 10, screen_y - 10, "RADIUS");
-    FC_Draw(Fonts::ScifiSmallWhite, renderer, (screen_x) + (screen_radius) + 120 - (width), screen_y - 10, radius_as_string);
+    TextHandler::DrawText("RADIUS", info_name_x, info_name_y + (zoom*15), ALIGN_LEFT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
+    TextHandler::DrawText(radius_as_string, info_value_x, info_value_y + (zoom*15), ALIGN_RIGHT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
 
 
     // Velocity
     string velocity_as_string = make_standard_velocity(GetVelocity());
-    width = FC_GetWidth(Fonts::ScifiSmallWhite, velocity_as_string);
 
-    FC_Draw(Fonts::ScifiSmallWhite, renderer, (screen_x) + (screen_radius) + 10, screen_y, "VELOCITY");
-    FC_Draw(Fonts::ScifiSmallWhite, renderer, (screen_x) + (screen_radius) + 120 - (width), screen_y, velocity_as_string);*/
+    TextHandler::DrawText("VELOCITY", info_name_x, info_name_y + (zoom*30), ALIGN_LEFT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
+    TextHandler::DrawText(velocity_as_string, info_value_x, info_value_y + (zoom*30), ALIGN_RIGHT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
 }

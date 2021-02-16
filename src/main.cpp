@@ -195,10 +195,6 @@ int main(int argv, char** args)
         glClear(GL_COLOR_BUFFER_BIT);
 
 
-        // Draw bodies
-        sun.Render();
-
-
         // Draw paths
         for (vector<OrbitPoint> orbit_point_vector : orbit_points) {
             for (int i = 0; i < orbit_point_vector.size()-1; i++) {
@@ -211,12 +207,18 @@ int main(int argv, char** args)
                     orbit_point_1.pos_y.convert_to<float>(),
                     orbit_point_2.pos_x.convert_to<float>(),
                     orbit_point_2.pos_y.convert_to<float>(),
-                    zoom.convert_to<float>(), 1.0, 1.0, 1.0, 1.0);
+                    zoom.convert_to<float>(), 1.0, 1.0, 1.0, 0.6);
             }
         }
 
+
+        // Draw bodies
+        sun.Render(zoom);
+
+
         // Update window
         GeometryHandler::Render();
+        TextHandler::Render();
 
         SDL_GL_SwapWindow(window);
     }

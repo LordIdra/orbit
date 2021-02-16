@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 
+#include "TextHandler.h"
 #include "GeometryHandler.h"
 #include "Fonts.h"
 #include "Numbers.h"
@@ -29,5 +30,5 @@ public:
         afloat starting_vel_y,
         float s_r, float s_b, float s_g, float s_a);
 
-    void Render();
+    void Render(afloat zoom);
 };

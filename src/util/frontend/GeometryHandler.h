@@ -53,8 +53,8 @@ public:
     static void UpdateZoom(afloat zoom);
     static void UpdateOffset(afloat offset_x, afloat offset_y);
 
-    static void DrawTriangle (float x1, float y1, float x2, float y2, float x3, float y3, float r, float g, float b, float a);
-    static void DrawRectangle(float x1, float y1, float x2, float y2, float r, float g, float b, float a);
-    static void DrawLine     (float x1, float y1, float x2, float y2, float width, float r, float g, float b, float a);
-    static void DrawPolygon  (float x, float y, float sides, float radius, float r, float g, float b, float a);
+    static void DrawTriangle (afloat x1, afloat y1, afloat x2, afloat y2, afloat x3, afloat y3, float r, float g, float b, float a);
+    static void DrawRectangle(afloat x1, afloat y1, afloat x2, afloat y2, float r, float g, float b, float a);
+    static void DrawLine     (afloat x1, afloat y1, afloat x2, afloat y2, float width, float r, float g, float b, float a);
+    static void DrawPolygon  (afloat x, afloat y, float sides, float radius, float r, float g, float b, float a);
 };

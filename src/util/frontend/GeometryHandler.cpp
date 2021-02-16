@@ -124,7 +124,15 @@ void GeometryHandler::UpdateOffset(afloat x, afloat y) {
 
 
 
-void GeometryHandler::DrawTriangle(float x1, float y1, float x2, float y2, float x3, float y3, float r, float g, float b, float a) {
+void GeometryHandler::DrawTriangle(afloat in_x1, afloat in_y1, afloat in_x2, afloat in_y2, afloat in_x3, afloat in_y3, float r, float g, float b, float a) {
+    // Convert input afloats to normal floats
+    float x1 = in_x1.convert_to<float>();
+    float y1 = in_y1.convert_to<float>();
+    float x2 = in_x2.convert_to<float>();
+    float y2 = in_y2.convert_to<float>();
+    float x3 = in_x3.convert_to<float>();
+    float y3 = in_y3.convert_to<float>();
+
     // Vertices
     AddVertex(x1, y1, r, g, b, a);
     AddVertex(x2, y2, r, g, b, a);
@@ -140,7 +148,13 @@ void GeometryHandler::DrawTriangle(float x1, float y1, float x2, float y2, float
     triangle_count += 1;
 }
 
-void GeometryHandler::DrawRectangle(float x1, float y1, float x2, float y2, float r, float g, float b, float a) {
+void GeometryHandler::DrawRectangle(afloat in_x1, afloat in_y1, afloat in_x2, afloat in_y2, float r, float g, float b, float a) {
+    // Convert input afloats to normal floats
+    float x1 = in_x1.convert_to<float>();
+    float y1 = in_y1.convert_to<float>();
+    float x2 = in_x2.convert_to<float>();
+    float y2 = in_y2.convert_to<float>();
+
     // Vertices
     AddVertex(x1, y1, r, g, b, a);
     AddVertex(x1, y2, r, g, b, a);
@@ -160,7 +174,13 @@ void GeometryHandler::DrawRectangle(float x1, float y1, float x2, float y2, floa
     triangle_count += 2;
 }
 
-void GeometryHandler::DrawLine(float x1, float y1, float x2, float y2, float width, float r, float g, float b, float a) {
+void GeometryHandler::DrawLine(afloat in_x1, afloat in_y1, afloat in_x2, afloat in_y2, float width, float r, float g, float b, float a) {
+    // Convert input afloats to normal floats
+    float x1 = in_x1.convert_to<float>();
+    float y1 = in_y1.convert_to<float>();
+    float x2 = in_x2.convert_to<float>();
+    float y2 = in_y2.convert_to<float>();
+
     // Calculate gradient and perpendicular gradient
     float gradient = (y1 - y2) / (x1 - x2);
     float theta = (atan(gradient))-1.57;
@@ -190,9 +210,14 @@ void GeometryHandler::DrawLine(float x1, float y1, float x2, float y2, float wid
     triangle_count += 2;
 }
 
-void GeometryHandler::DrawPolygon(float cx, float cy, float sides, float radius, float r, float g, float b, float a) {
+void GeometryHandler::DrawPolygon(afloat in_cx, afloat in_cy, float sides, float radius, float r, float g, float b, float a) {
     // All explained on this site
     /* http://slabode.exofire.net/circle_draw.shtml */
+
+    // Convert input afloats to normal floats
+    float cx = in_cx.convert_to<float>();
+    float cy = in_cy.convert_to<float>();
+
     float theta = 2 * 3.1415926 / float(sides); 
 	float tangetial_factor = tanf(theta);
 
@@ -228,7 +253,7 @@ void GeometryHandler::DrawPolygon(float cx, float cy, float sides, float radius,
         }
 	}
 
-    // Increment index counter (4 indices have been used) and triangle counter (2 triangles have been drawn)
+    // Increment index counter (sides+1 indices have been used) and triangle counter (sides triangles have been drawn)
     index_counter += sides + 1;
-    triangle_count += sides;
+    triangle_count += sides + 1;
 }

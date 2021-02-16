@@ -3,7 +3,8 @@
 
 
 
-map<char, Character> Fonts::shentox = map<char, Character>();
+map<char, Character> Fonts::default_font = map<char, Character>();
+float Fonts::window_scalar = 1;
 
 
 map<char, Character> Fonts::LoadFont(string location)
@@ -72,6 +73,24 @@ map<char, Character> Fonts::LoadFont(string location)
 }
 
 
+void Fonts::UpdateWindowScalar(float scalar) {
+    Fonts::window_scalar = scalar;
+}
+
+
 void Fonts::InitializeFonts() {
-    Fonts::shentox = LoadFont("../fonts/Shentox.ttf");
+    Fonts::default_font = LoadFont("../fonts/ARIAL.TTF");
+}
+
+
+float Fonts::GetTextWidth(string text, float size) {
+    // Iterate through text and return the total size that it will take on the screen
+    float total_width = 0;
+    std::string::const_iterator c;
+
+    for (c = text.begin(); c != text.end(); c++) {
+        total_width += Fonts::default_font[*c].Advance * size * window_scalar;
+    }
+
+    return total_width / 64;
 }

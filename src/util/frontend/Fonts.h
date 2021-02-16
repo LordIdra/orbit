@@ -24,8 +24,13 @@ struct Character {
 
 
 class Fonts {
+private:
+    static float window_scalar;
+
 public:
+    static void UpdateWindowScalar(float window_scalar);
     static map<char, Character> LoadFont(string location);
     static void InitializeFonts();
-    static map<char, Character> shentox;
+    static map<char, Character> default_font;
+    static float GetTextWidth(string text, float size);
 };
