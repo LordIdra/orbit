@@ -34,41 +34,41 @@ void Planet::Render(afloat zoom)
     // TODO tomorrow
 
     // Screen position variables
-    afloat info_name_x = pos_x + (radius * 2) + (zoom * 90);
+    afloat info_name_x = pos_x + (radius * 2);
     afloat info_name_y = pos_y - (zoom * 70);
 
-    afloat info_value_x = pos_x + (radius * 2) + (zoom * 230);
+    afloat info_value_x = pos_x + (radius * 2) + (zoom * 200);
     afloat info_value_y = pos_y - (zoom * 70);
 
     // Background
     GeometryHandler::DrawRectangle(
-        pos_x + (radius * 2) + (zoom * 80), 
-        pos_y - (zoom * 90), 
-        pos_x + (radius * 2) + (zoom * 240), 
-        pos_y + (zoom * 90), 
+        pos_x + (radius * 2), 
+        pos_y - (zoom * 100), 
+        pos_x + (radius * 2) + (zoom * 200), 
+        pos_y + (zoom * 100), 
         0.0f, 0.0f, 0.0f, 0.6f);
 
     // Name
-    TextHandler::DrawText(name, pos_x + (radius * 2) + (zoom * 160), pos_y - (zoom * 90), ALIGN_CENTRE, 0.4f, 1.0f, 1.0f, 1.0f, 1.0f);
+    TextHandler::DrawText(name, pos_x + (radius * 2) + (zoom * 100), pos_y - (zoom * 100), ALIGN_CENTRE, 0.6f, 1.0f, 1.0f, 1.0f, 1.0f);
 
     
     // Mass
     string mass_as_string = make_standard_mass(mass);
 
-    TextHandler::DrawText("MASS", info_name_x, info_name_y, ALIGN_LEFT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
-    TextHandler::DrawText(mass_as_string, info_value_x, info_value_y, ALIGN_RIGHT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
+    TextHandler::DrawText("MASS", info_name_x, info_name_y, ALIGN_LEFT, 0.35f, 1.0f, 1.0f, 1.0f, 1.0f);
+    TextHandler::DrawText(mass_as_string, info_value_x, info_value_y, ALIGN_RIGHT, 0.35f, 1.0f, 1.0f, 1.0f, 1.0f);
 
 
     // Radius
     string radius_as_string = make_standard_distance(radius);
 
-    TextHandler::DrawText("RADIUS", info_name_x, info_name_y + (zoom*15), ALIGN_LEFT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
-    TextHandler::DrawText(radius_as_string, info_value_x, info_value_y + (zoom*15), ALIGN_RIGHT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
+    TextHandler::DrawText("RADIUS", info_name_x, info_name_y + (zoom*20), ALIGN_LEFT, 0.35f, 1.0f, 1.0f, 1.0f, 1.0f);
+    TextHandler::DrawText(radius_as_string, info_value_x, info_value_y + (zoom*20), ALIGN_RIGHT, 0.35f, 1.0f, 1.0f, 1.0f, 1.0f);
 
 
     // Velocity
     string velocity_as_string = make_standard_velocity(GetVelocity());
 
-    TextHandler::DrawText("VELOCITY", info_name_x, info_name_y + (zoom*30), ALIGN_LEFT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
-    TextHandler::DrawText(velocity_as_string, info_value_x, info_value_y + (zoom*30), ALIGN_RIGHT, 0.25f, 1.0f, 1.0f, 1.0f, 1.0f);
+    TextHandler::DrawText("VELOCITY", info_name_x, info_name_y + (zoom*40), ALIGN_LEFT, 0.35f, 1.0f, 1.0f, 1.0f, 1.0f);
+    TextHandler::DrawText(velocity_as_string, info_value_x, info_value_y + (zoom*40), ALIGN_RIGHT, 0.35f, 1.0f, 1.0f, 1.0f, 1.0f);
 }
