@@ -9,7 +9,6 @@
 				"-std=c++17",
 				"-pipe",
 
-				"-IC:\\boost_1_72_0",
 				"-I${workspaceFolder}\\src\\bodies",
 				"-I${workspaceFolder}\\src\\celestials",
 				"-I${workspaceFolder}\\src\\util\\frontend",
@@ -19,11 +18,12 @@
 				"${workspaceFolder}\\src\\main.cpp",
 
 				"${workspaceFolder}\\src\\util\\frontend\\Fonts.cpp",
-				"${workspaceFolder}\\src\\util\\frontend\\GeometryHandler.cpp",
+				"${workspaceFolder}\\src\\util\\frontend\\Geometry.cpp",
 				"${workspaceFolder}\\src\\util\\frontend\\Shader.cpp",
-				"${workspaceFolder}\\src\\util\\frontend\\TextHandler.cpp",
-				"${workspaceFolder}\\src\\util\\backend\\Numbers.cpp",
+				"${workspaceFolder}\\src\\util\\frontend\\Text.cpp",
+				"${workspaceFolder}\\src\\util\\frontend\\WindowInformation.cpp",
 				"${workspaceFolder}\\src\\util\\backend\\OrbitPrediction.cpp",
+				"${workspaceFolder}\\src\\util\\backend\\Unit.cpp",
 				"${workspaceFolder}\\src\\bodies\\Body.cpp",
 				"${workspaceFolder}\\src\\bodies\\Planet.cpp",
 				"${workspaceFolder}\\src\\bodies\\Star.cpp",

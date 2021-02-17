@@ -1,16 +1,17 @@
 #pragma once
 
 #include <math.h>
-#include <string.h>
-
-#include "Numbers.h"
+#include <string>
 
 using std::string;
 
 
 
 
-const afloat cutoff_threshold = afloat(0.0000000001);
+const double GRAVITATIONAL_CONSTANT = 0.000000000066742;
+
+
+const double cutoff_threshold = double(0.0000000001);
 
 
 class Body
@@ -24,25 +25,25 @@ public:
     // https://softwareengineering.stackexchange.com/questions/21802/when-are-getters-and-setters-justified?noredirect=1&lq=1
 
     string name;
-    afloat mass;
+    double mass;
     
-    afloat pos_x;
-    afloat pos_y;
+    double pos_x;
+    double pos_y;
 
-    afloat vel_x;
-    afloat vel_y;
+    double vel_x;
+    double vel_y;
 
-    afloat influence_radius;
+    double influence_radius;
 
 
 
     
-    Body(string starting_name, afloat starting_mass, afloat starting_pos_x, afloat starting_pos_y, afloat starting_vel_x, afloat starting_vel_y);
+    Body(string starting_name, double starting_mass, double starting_pos_x, double starting_pos_y, double starting_vel_x, double starting_vel_y);
 
-    afloat GetDistance(afloat x, afloat y);
-    afloat GetVelocity();
-    afloat GetKineticEnergy();
+    double GetDistance(double x, double y);
+    double GetVelocity();
+    double GetKineticEnergy();
 
-    void ApplyGravitationalForce(afloat magnitude, Body &body);
-    void ApplyVelocity(afloat magnitude);
+    void ApplyGravitationalForce(double magnitude, Body &body);
+    void ApplyVelocity(double magnitude);
 };

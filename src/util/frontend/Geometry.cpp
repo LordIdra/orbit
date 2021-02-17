@@ -1,34 +1,25 @@
-#include "GeometryHandler.h"
+#include "Geometry.h"
 
 #include <iostream>
 
 
 
-GLuint GeometryHandler::vao = 0;
-GLuint GeometryHandler::vbo = 0;
-GLuint GeometryHandler::ebo = 0;
+GLuint Geometry::vao = 0;
+GLuint Geometry::vbo = 0;
+GLuint Geometry::ebo = 0;
 
-Shader GeometryHandler::shader = Shader();
+Shader Geometry::shader = Shader();
 
-vector<float> GeometryHandler::vertex_data = vector<float>();
-vector<unsigned int> GeometryHandler::index_data = vector<unsigned int>();
+vector<float> Geometry::vertex_data = vector<float>();
+vector<unsigned int> Geometry::index_data = vector<unsigned int>();
 
-int GeometryHandler::triangle_count = 0;
-int GeometryHandler::index_counter = 0;
-
-float GeometryHandler::window_x = 1;
-float GeometryHandler::window_y = 1;
-
-afloat GeometryHandler::zoom_x = 1;
-afloat GeometryHandler::zoom_y = 1;
-
-afloat GeometryHandler::offset_x = 1;
-afloat GeometryHandler::offset_y = 1;
+int Geometry::triangle_count = 0;
+int Geometry::index_counter = 0;
 
 
 
 
-void GeometryHandler::Init() {
+void Geometry::Init() {
     // Generate shaders
     shader = Shader("shaders/TriangleVertex.glsl", "shaders/TriangleFragment.glsl");
     shader.Use();
@@ -53,11 +44,16 @@ void GeometryHandler::Init() {
     glUseProgram(0);
 }
 
-void GeometryHandler::Render() {
+void Geometry::Render() {
     // Create transformation matrix
     glm::mat4 transform_matrix = glm::mat4(1.0f);
-    transform_matrix = glm::translate(transform_matrix, glm::vec3((offset_x/zoom_x).convert_to<float>(), -(offset_y/zoom_y).convert_to<float>(), 0.0f));
-    transform_matrix = glm::scale(transform_matrix, glm::vec3((1/zoom_x).convert_to<float>(), (1/zoom_y).convert_to<float>(), 1.0f));
+
+    transform_matrix = glm::translate(transform_matrix, glm::vec3(
+        WindowInformation::offset_x/WindowInformation::zoom_x, 
+        -WindowInformation::offset_y/WindowInformation::zoom_y, 
+        0.0f));
+    
+    transform_matrix = glm::scale(transform_matrix, glm::vec3(1/WindowInformation::WindowInformation::zoom_x, 1/WindowInformation::zoom_y, 1.0f));
 
     // Handle shader
     shader.Use();
@@ -88,7 +84,7 @@ void GeometryHandler::Render() {
 
 
 
-void GeometryHandler::AddVertex(float x, float y, float r, float g, float b, float a) {
+void Geometry::AddVertex(float x, float y, float r, float g, float b, float a) {
     vertex_data.push_back(x);
     vertex_data.push_back(-y);
     vertex_data.push_back(r);
@@ -97,7 +93,7 @@ void GeometryHandler::AddVertex(float x, float y, float r, float g, float b, flo
     vertex_data.push_back(a);
 }
 
-void GeometryHandler::AddIndex(int index) {
+void Geometry::AddIndex(int index) {
     index_data.push_back(index);
 }
 
@@ -105,33 +101,14 @@ void GeometryHandler::AddIndex(int index) {
 
 
 
-void GeometryHandler::UpdateScreenSize(int x, int y) {
-    window_x = x;
-    window_y = y;
-}
-
-void GeometryHandler::UpdateZoom(afloat zoom) {
-    zoom_x = window_x * zoom;
-    zoom_y = window_y * zoom;
-}
-
-void GeometryHandler::UpdateOffset(afloat x, afloat y) {
-    offset_x = x;
-    offset_y = y;
-}
-
-
-
-
-
-void GeometryHandler::DrawTriangle(afloat in_x1, afloat in_y1, afloat in_x2, afloat in_y2, afloat in_x3, afloat in_y3, float r, float g, float b, float a) {
-    // Convert input afloats to normal floats
-    float x1 = in_x1.convert_to<float>();
-    float y1 = in_y1.convert_to<float>();
-    float x2 = in_x2.convert_to<float>();
-    float y2 = in_y2.convert_to<float>();
-    float x3 = in_x3.convert_to<float>();
-    float y3 = in_y3.convert_to<float>();
+void Geometry::DrawTriangle(double in_x1, double in_y1, double in_x2, double in_y2, double in_x3, double in_y3, float r, float g, float b, float a) {
+    // Convert input doubles to normal floats
+    float x1 = in_x1;
+    float y1 = in_y1;
+    float x2 = in_x2;
+    float y2 = in_y2;
+    float x3 = in_x3;
+    float y3 = in_y3;
 
     // Vertices
     AddVertex(x1, y1, r, g, b, a);
@@ -148,12 +125,12 @@ void GeometryHandler::DrawTriangle(afloat in_x1, afloat in_y1, afloat in_x2, afl
     triangle_count += 1;
 }
 
-void GeometryHandler::DrawRectangle(afloat in_x1, afloat in_y1, afloat in_x2, afloat in_y2, float r, float g, float b, float a) {
-    // Convert input afloats to normal floats
-    float x1 = in_x1.convert_to<float>();
-    float y1 = in_y1.convert_to<float>();
-    float x2 = in_x2.convert_to<float>();
-    float y2 = in_y2.convert_to<float>();
+void Geometry::DrawRectangle(double in_x1, double in_y1, double in_x2, double in_y2, float r, float g, float b, float a) {
+    // Convert input doubles to normal floats
+    float x1 = in_x1;
+    float y1 = in_y1;
+    float x2 = in_x2;
+    float y2 = in_y2;
 
     // Vertices
     AddVertex(x1, y1, r, g, b, a);
@@ -174,12 +151,12 @@ void GeometryHandler::DrawRectangle(afloat in_x1, afloat in_y1, afloat in_x2, af
     triangle_count += 2;
 }
 
-void GeometryHandler::DrawLine(afloat in_x1, afloat in_y1, afloat in_x2, afloat in_y2, float width, float r, float g, float b, float a) {
-    // Convert input afloats to normal floats
-    float x1 = in_x1.convert_to<float>();
-    float y1 = in_y1.convert_to<float>();
-    float x2 = in_x2.convert_to<float>();
-    float y2 = in_y2.convert_to<float>();
+void Geometry::DrawLine(double in_x1, double in_y1, double in_x2, double in_y2, float width, float r, float g, float b, float a) {
+    // Convert input doubles to normal floats
+    float x1 = in_x1;
+    float y1 = in_y1;
+    float x2 = in_x2;
+    float y2 = in_y2;
 
     // Calculate gradient and perpendicular gradient
     float gradient = (y1 - y2) / (x1 - x2);
@@ -210,13 +187,13 @@ void GeometryHandler::DrawLine(afloat in_x1, afloat in_y1, afloat in_x2, afloat 
     triangle_count += 2;
 }
 
-void GeometryHandler::DrawPolygon(afloat in_cx, afloat in_cy, float sides, float radius, float r, float g, float b, float a) {
+void Geometry::DrawPolygon(double in_cx, double in_cy, float sides, float radius, float r, float g, float b, float a) {
     // All explained on this site
     /* http://slabode.exofire.net/circle_draw.shtml */
 
-    // Convert input afloats to normal floats
-    float cx = in_cx.convert_to<float>();
-    float cy = in_cy.convert_to<float>();
+    // Convert input doubles to normal floats
+    float cx = in_cx;
+    float cy = in_cy;
 
     float theta = 2 * 3.1415926 / float(sides); 
 	float tangetial_factor = tanf(theta);

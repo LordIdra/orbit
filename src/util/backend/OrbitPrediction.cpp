@@ -1,10 +1,11 @@
 #include "OrbitPrediction.h"
 
+#include <chrono>
+#include <iostream>
 
 
 
-
-OrbitPoint::OrbitPoint(afloat pos_x, afloat pos_y, afloat vel_x, afloat vel_y) {
+OrbitPoint::OrbitPoint(double pos_x, double pos_y, double vel_x, double vel_y) {
     this->pos_x = pos_x;
     this->pos_y = pos_y;
     
@@ -14,16 +15,16 @@ OrbitPoint::OrbitPoint(afloat pos_x, afloat pos_y, afloat vel_x, afloat vel_y) {
 
 
 
-afloat OrbitPoint::Speed() {
-    return root(power(vel_x, 2) + power(vel_y, 2));
+double OrbitPoint::Speed() {
+    return sqrt(pow(vel_x, 2) + pow(vel_y, 2));
 }
 
-afloat OrbitPoint::Distance(afloat parent_x, afloat parent_y) {
-    return root(power(pos_x - parent_x, 2) + power(pos_y - parent_y, 2));
+double OrbitPoint::Distance(double parent_x, double parent_y) {
+    return sqrt(pow(pos_x - parent_x, 2) + pow(pos_y - parent_y, 2));
 }
 
-afloat OrbitPoint::Angle(afloat parent_x, afloat parent_y) {
-    return atan(power(pos_x - parent_x, 2) / power(pos_y - parent_y, 2));
+double OrbitPoint::Angle(double parent_x, double parent_y) {
+    return atan(pow(pos_x - parent_x, 2) / pow(pos_y - parent_y, 2));
 }
 
 
@@ -35,6 +36,7 @@ vector<vector<OrbitPoint>> PredictOrbits(int total_time_step, int time_step_size
 
     for (int i = 0; i < system.size(); i++) orbit_points.push_back(vector<OrbitPoint>());
 
+    auto start = std::chrono::high_resolution_clock::now();
     while (current_time_step < total_time_step) {
         /* https://medium.com/python-in-plain-english/molecular-dynamics-velocity-verlet-integration-with-python-5ae66b63a8fd */
 
@@ -52,7 +54,7 @@ vector<vector<OrbitPoint>> PredictOrbits(int total_time_step, int time_step_size
             }
         }
 
-        // 2] Update positions
+        // 2] Update positions;
         for (Body &body : system) {
             body.ApplyVelocity(time_step_size);
         }
@@ -60,6 +62,9 @@ vector<vector<OrbitPoint>> PredictOrbits(int total_time_step, int time_step_size
         // 3] Move time forward
         current_time_step += 1;
     }
+    
+    auto finish = std::chrono::high_resolution_clock::now();
+    std::cout << "Gravity simulation: " << (finish - start).count() << "\n";
 
     return orbit_points;
 }

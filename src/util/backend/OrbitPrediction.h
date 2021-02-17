@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <map>
+#include <SDL2/SDL.h>
 
 #include "Body.h"
 
@@ -14,18 +15,18 @@ using std::map;
 
 struct OrbitPoint {
     
-    afloat pos_x;
-    afloat pos_y;
+    double pos_x;
+    double pos_y;
 
-    afloat vel_x;
-    afloat vel_y;
+    double vel_x;
+    double vel_y;
 
     
-    OrbitPoint(afloat pos_x, afloat pos_y, afloat vel_x, afloat vel_y);
+    OrbitPoint(double pos_x, double pos_y, double vel_x, double vel_y);
 
-    afloat Speed();
-    afloat Distance(afloat parent_x, afloat parent_y);
-    afloat Angle(afloat parent_x, afloat parent_y);
+    double Speed();
+    double Distance(double parent_x, double parent_y);
+    double Angle(double parent_x, double parent_y);
 };
 
 

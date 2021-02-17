@@ -2,11 +2,13 @@
 
 #include <SDL2/SDL.h>
 
-#include "TextHandler.h"
-#include "GeometryHandler.h"
+#include "Unit.h"
+#include "Text.h"
+#include "Geometry.h"
 #include "Fonts.h"
-#include "Numbers.h"
 #include "Body.h"
+
+
 
 
 
@@ -17,18 +19,22 @@ public:
     float g;
     float b;
     float a;
-    afloat        radius;
+
+    float info_a;
+    float path_a;
+    
+    double        radius;
 
 
     Planet(
         string starting_name,
-        afloat starting_mass,
-        afloat starting_radius,
-        afloat starting_pos_x, 
-        afloat starting_pos_y,
-        afloat starting_vel_x,
-        afloat starting_vel_y,
-        float s_r, float s_b, float s_g, float s_a);
+        double starting_mass,
+        double starting_radius,
+        double starting_pos_x, 
+        double starting_pos_y,
+        double starting_vel_x,
+        double starting_vel_y,
+        float s_r, float s_b, float s_g);
 
-    void Render(afloat zoom);
+    void Render(double zoom, float window_x);
 };

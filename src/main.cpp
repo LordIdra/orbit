@@ -3,13 +3,13 @@
 
 #include <iostream>
 #include <vector>
-#include <chrono>
 
 #include <windows.h>
 
 #include "Shader.h"
-#include "TextHandler.h"
-#include "GeometryHandler.h"
+#include "Text.h"
+#include "Geometry.h"
+#include "WindowInformation.h"
 
 #include "SolarSystem.h"
 #include "OrbitPrediction.h"
@@ -25,24 +25,24 @@ using std::vector;
 /* https://gist.github.com/sherjilozair/ac2ac5e3002b6f3becaef214ebe3cd7a */
 
 
-afloat zoom = 500000000;
+double zoom = 500000000;
 
-afloat mouse_x = 0;
-afloat mouse_y = 0;
+double mouse_x = 0;
+double mouse_y = 0;
 
-afloat mouse_x_previous = 0;
-afloat mouse_y_previous = 0;
+double mouse_x_previous = 0;
+double mouse_y_previous = 0;
 
 int window_x = 0;
 int window_y = 0;
 
-afloat offset_x = 0;
-afloat offset_y = 0;
+double offset_x = 0;
+double offset_y = 0;
 
 bool is_running = true;
 bool mouse_down = false;
 
-int step = 100000;
+double step = 10000;
 
 SDL_Event event;
 
@@ -75,7 +75,7 @@ void handle_input() {
         
         case SDL_MOUSEWHEEL:
             // Zoom in/out
-            afloat old_zoom = zoom;
+            double old_zoom = zoom;
             zoom *= 1 - (event.wheel.y*0.1);
             offset_x -= (mouse_x - (window_x/2)) * (old_zoom - zoom) * 2;
             offset_y -= (mouse_y - (window_y/2)) * (old_zoom - zoom) * 2;
@@ -136,8 +136,8 @@ int main(int argv, char** args)
     // Load fonts
     Fonts::InitializeFonts();
 
-    GeometryHandler::Init();
-    TextHandler::Init();
+    Geometry::Init();
+    Text::Init();
 
 
     // Mainloop
@@ -168,14 +168,7 @@ int main(int argv, char** args)
         // Update dimension variables
         SDL_GetWindowSize(window, &window_x, &window_y);
 
-        GeometryHandler::UpdateScreenSize(window_x, window_y);
-        GeometryHandler::UpdateZoom(zoom);
-        GeometryHandler::UpdateOffset(offset_x, offset_y);
-
-        TextHandler::UpdateScreenSize(window_x, window_y);
-        TextHandler::UpdateZoom(zoom);
-        TextHandler::UpdateOffset(offset_x, offset_y);
-
+        WindowInformation::Update(window_x, window_y, offset_x, offset_y, zoom);
 
         // Create a vector of all the bodies
         vector<Body> system_bodies;
@@ -187,7 +180,7 @@ int main(int argv, char** args)
 
 
         // Simulate orbits
-        vector<vector<OrbitPoint>> orbit_points = PredictOrbits(100, step, system_bodies);
+        vector<vector<OrbitPoint>> orbit_points = PredictOrbits(10000, step, system_bodies);
         
 
         // Clear screen
@@ -202,23 +195,23 @@ int main(int argv, char** args)
                 OrbitPoint orbit_point_1 = orbit_point_vector[i];
                 OrbitPoint orbit_point_2 = orbit_point_vector[i+1];
 
-                GeometryHandler::DrawLine(
-                    orbit_point_1.pos_x.convert_to<float>(),
-                    orbit_point_1.pos_y.convert_to<float>(),
-                    orbit_point_2.pos_x.convert_to<float>(),
-                    orbit_point_2.pos_y.convert_to<float>(),
-                    zoom.convert_to<float>(), 1.0, 1.0, 1.0, 0.6);
+                Geometry::DrawLine(
+                    orbit_point_1.pos_x,
+                    orbit_point_1.pos_y,
+                    orbit_point_2.pos_x,
+                    orbit_point_2.pos_y,
+                    zoom, 1.0, 1.0, 1.0, 0.6);
             }
         }
 
 
         // Draw bodies
-        sun.Render(zoom);
+        sun.Render(zoom, window_x);
 
 
         // Update window
-        GeometryHandler::Render();
-        TextHandler::Render();
+        Geometry::Render();
+        Text::Render();
 
         SDL_GL_SwapWindow(window);
     }

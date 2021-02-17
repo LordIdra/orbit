@@ -1,30 +1,21 @@
-#include "TextHandler.h"
+#include "Text.h"
 
 
 
 
-GLuint TextHandler::vao = 0;
-GLuint TextHandler::vbo = 0;
+GLuint Text::vao = 0;
+GLuint Text::vbo = 0;
 
-Shader TextHandler::shader = Shader();
+Shader Text::shader = Shader();
 
-vector<float> TextHandler::vertex_data = vector<float>();
+vector<float> Text::vertex_data = vector<float>();
 
-float TextHandler::window_x = 1;
-float TextHandler::window_y = 1;
-
-afloat TextHandler::zoom_x = 1;
-afloat TextHandler::zoom_y = 1;
-
-afloat TextHandler::offset_x = 1;
-afloat TextHandler::offset_y = 1;
-
-vector<TextObject> TextHandler::text_objects = vector<TextObject>();
+vector<TextObject> Text::text_objects = vector<TextObject>();
 
 
 
 
-void TextHandler::Init() {
+void Text::Init() {
     // Generate shaders
     shader = Shader("shaders/TextVertex.glsl", "shaders/TextFragment.glsl");
     shader.Use();
@@ -53,34 +44,13 @@ void TextHandler::Init() {
 
 
 
-void TextHandler::UpdateScreenSize(int x, int y) {
-    window_x = x;
-    window_y = y;
-
-    Fonts::UpdateWindowScalar(window_y/window_x);
-}
-
-void TextHandler::UpdateZoom(afloat zoom) {
-    zoom_x = window_x * zoom;
-    zoom_y = window_y * zoom;
-}
-
-void TextHandler::UpdateOffset(afloat x, afloat y) {
-    offset_x = x;
-    offset_y = y;
-}
-
-
-
-
-
-void TextHandler::DrawText(std::string text, afloat in_x, afloat in_y, int align, float size, float r, float g, float b, float a) {
+void Text::DrawText(std::string text, double in_x, double in_y, int align, float size, float r, float g, float b, float a) {
     // Scale down size
     size /= 1000;
 
     // Transform inputs from world space to camera space
-    float x = ((in_x + offset_x)/zoom_x).convert_to<float>();
-    float y = (-(in_y + offset_y)/zoom_y).convert_to<float>();
+    float x = (in_x + WindowInformation::offset_x)/WindowInformation::zoom_x;
+    float y = -(in_y + WindowInformation::offset_y)/WindowInformation::zoom_y;
 
     // Account for alignment
     switch (align) {
@@ -91,7 +61,6 @@ void TextHandler::DrawText(std::string text, afloat in_x, afloat in_y, int align
 
     case ALIGN_CENTRE:
         // Half-width offset
-        std::cout << Fonts::GetTextWidth(text, size) / 2 << "\n";
         x -= Fonts::GetTextWidth(text, size) / 2;
         break;
 
@@ -110,7 +79,7 @@ void TextHandler::DrawText(std::string text, afloat in_x, afloat in_y, int align
 }
 
 
-void TextHandler::Render()
+void Text::Render()
 {
     // Use shader
     shader.Use();
@@ -118,6 +87,9 @@ void TextHandler::Render()
     // Prepare texture unit and bind VAO
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(vao);
+
+    // Calculate width scalar
+    float width_scalar = WindowInformation::window_y/WindowInformation::window_x;
 
     // Iterate through all text objects
     for (TextObject text_object : text_objects) {
@@ -139,7 +111,7 @@ void TextHandler::Render()
             float h = character.Size.y * text_object.size;
 
             // Adjust for window size
-            w *= window_y/window_x;
+            w *= width_scalar;
 
             // Send each character to the VBO
             float vertices[6][4] = {
@@ -164,7 +136,7 @@ void TextHandler::Render()
             glDrawArrays(GL_TRIANGLES, 0, 6);
 
             // Advance to next glyph
-            text_object.x += (character.Advance >> 6) * text_object.size * (window_y/window_x);
+            text_object.x += (character.Advance >> 6) * text_object.size * (width_scalar);
         }
     }
 
@@ -174,4 +146,7 @@ void TextHandler::Render()
 
     // Clear text pbject vector
     text_objects.clear();
+
+    // Update variables for next text draws
+    Fonts::UpdateWindowScalar(width_scalar);
 }

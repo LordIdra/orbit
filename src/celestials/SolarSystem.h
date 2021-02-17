@@ -12,11 +12,11 @@ using std::vector;
 
 Planet CreatePlanetFromOrbit(
         string            name,                   // name
-        afloat            mass,                   // kg
-        afloat            radius,                 // km
-        afloat            perihelion,             // km
-        afloat            perihelion_argument,    // degrees
-        afloat            velocity,               // km/s
+        double            mass,                   // kg
+        double            radius,                 // km
+        double            perihelion,             // km
+        double            perihelion_argument,    // degrees
+        double            velocity,               // km/s
         SDL_Color color);
 
 
