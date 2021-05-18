@@ -1,2 +1,6 @@
+
 # ORBIT
 WIP orbital visualisation in C++ using SDL2 and OpenGL. 
+
+Currently implements N-body simulation, though I've recently switched to 2-body and am implementing tesselation for orbit visualisation.
+My first real attempt at a long-term project that follows a clear structure and is maintainable.
